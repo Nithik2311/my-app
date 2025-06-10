@@ -1,0 +1,186 @@
+// components/routeBusData.js
+
+const routeBusData = {
+  0: [
+    {
+      name: "Metro Rider",
+      image: "/buses/bus1.jpg",
+      busNumber: "MP01A1234",
+      departure: "07:00 AM",
+      arrival: "08:10 AM",
+      capacity: 45,
+    },
+    {
+      name: "City Sprinter",
+      image: "/buses/bus2.jpg",
+      busNumber: "MP01A5678",
+      departure: "09:00 AM",
+      arrival: "10:05 AM",
+      capacity: 50,
+    },
+  ],
+  1: [
+    {
+      name: "Tech Connector",
+      image: "/buses/bus3.jpg",
+      busNumber: "KA12B6789",
+      departure: "08:30 AM",
+      arrival: "09:15 AM",
+      capacity: 40,
+    },
+    {
+      name: "Urban Line",
+      image: "/buses/bus4.jpg",
+      busNumber: "KA12B1234",
+      departure: "11:00 AM",
+      arrival: "11:45 AM",
+      capacity: 48,
+    },
+  ],
+  2: [
+    {
+      name: "Skyline Shuttle",
+      image: "/buses/bus5.jpg",
+      busNumber: "MH14C1234",
+      departure: "06:00 AM",
+      arrival: "07:20 AM",
+      capacity: 42,
+    },
+    {
+      name: "Campus Express",
+      image: "/buses/bus6.jpg",
+      busNumber: "MH14C5678",
+      departure: "10:00 AM",
+      arrival: "11:15 AM",
+      capacity: 50,
+    },
+  ],
+  3: [
+    {
+      name: "CityXpress",
+      image: "/buses/bus7.jpg",
+      busNumber: "DL8S1234",
+      departure: "08:15 AM",
+      arrival: "09:00 AM",
+      capacity: 40,
+    },
+    {
+      name: "East Ride",
+      image: "/buses/bus8.jpg",
+      busNumber: "DL8S5678",
+      departure: "10:30 AM",
+      arrival: "11:25 AM",
+      capacity: 44,
+    },
+  ],
+  4: [
+    {
+      name: "River Liner",
+      image: "/buses/bus9.jpg",
+      busNumber: "RJ20X1234",
+      departure: "07:45 AM",
+      arrival: "09:00 AM",
+      capacity: 38,
+    },
+    {
+      name: "Garden Hopper",
+      image: "/buses/bus10.jpg",
+      busNumber: "RJ20X5678",
+      departure: "01:00 PM",
+      arrival: "02:15 PM",
+      capacity: 42,
+    },
+  ],
+  5: [
+    {
+      name: "Hill Shuttle",
+      image: "/buses/bus11.jpg",
+      busNumber: "TN45Y1234",
+      departure: "09:30 AM",
+      arrival: "10:45 AM",
+      capacity: 36,
+    },
+    {
+      name: "Mall Cruiser",
+      image: "/buses/bus12.jpg",
+      busNumber: "TN45Y5678",
+      departure: "03:00 PM",
+      arrival: "04:20 PM",
+      capacity: 50,
+    },
+  ],
+  6: [
+    {
+      name: "GreenWay",
+      image: "/buses/bus13.jpg",
+      busNumber: "AP16Z1234",
+      departure: "06:45 AM",
+      arrival: "08:00 AM",
+      capacity: 46,
+    },
+    {
+      name: "Industrial Express",
+      image: "/buses/bus14.jpg",
+      busNumber: "AP16Z5678",
+      departure: "12:15 PM",
+      arrival: "01:30 PM",
+      capacity: 49,
+    },
+  ],
+  7: [
+    {
+      name: "Stadium Shuttle",
+      image: "/buses/bus15.jpg",
+      busNumber: "GJ05W1234",
+      departure: "07:10 AM",
+      arrival: "08:20 AM",
+      capacity: 39,
+    },
+    {
+      name: "Museum Cruiser",
+      image: "/buses/bus16.jpg",
+      busNumber: "GJ05W5678",
+      departure: "02:00 PM",
+      arrival: "03:10 PM",
+      capacity: 41,
+    },
+  ],
+  8: [
+    {
+      name: "Depot Runner",
+      image: "/buses/bus17.jpg",
+      busNumber: "HR29V1234",
+      departure: "06:30 AM",
+      arrival: "07:40 AM",
+      capacity: 40,
+    },
+    {
+      name: "Marina Deluxe",
+      image: "/buses/bus18.jpg",
+      busNumber: "HR29V5678",
+      departure: "10:30 AM",
+      arrival: "11:40 AM",
+      capacity: 45,
+    },
+  ],
+  9: [
+    {
+      name: "Metro Express",
+      image: "/buses/bus19.jpg",
+      busNumber: "UP32Q1234",
+      departure: "05:45 AM",
+      arrival: "07:00 AM",
+      capacity: 43,
+    },
+    {
+      name: "Old Town Voyager",
+      image: "/buses/bus20.jpg",
+      busNumber: "UP32Q5678",
+      departure: "01:30 PM",
+      arrival: "02:50 PM",
+      capacity: 47,
+    },
+  ],
+};
+
+export default routeBusData;

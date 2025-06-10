@@ -1,0 +1,50 @@
+.features {
+  display: flex;
+  gap: 2rem;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 2rem 0;
+}
+
+.feature-card {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 1rem;
+  text-align: center;
+  width: 280px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.feature-card img {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+  font-size: 1.25rem;
+  color: #311B92;
+  margin-bottom: 0.5rem;
+}
+
+.feature-card p {
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.feature-card.clickable {
+  cursor: pointer;
+  background: linear-gradient(to top left, #f3e8ff, #fff);
+  border: 2px solid transparent;
+}
+
+.feature-card.clickable:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 30px rgba(93, 63, 211, 0.25);
+  border-color: #5D3FD3;
+}
+
+.feature-card.clickable:focus-within {
+  outline: 2px solid #5D3FD3;
+}

@@ -1,5 +1,8 @@
 import Head from "next/head";
 import Link from "next/link";
+import React,{ useEffect, useState } from "react";
+import FeaturesSection from "@/components/FeaturesSection";
+
 
 export default function Home() {
   return (
@@ -19,24 +22,7 @@ export default function Home() {
         </header>
 
         <section className="features">
-          <div className="feature-card clickable">
- 	 <img src="/live-track.png" alt="Live Tracking" />
- 	 <h3>Live Bus Tracking</h3>
-  	<p>Track your bus in real time and know exactly when it will arrive.</p>
-	</div>
-
-	<div className="feature-card clickable">
-	 <img src="/route-map.png" alt="Route Planning" />
-	  <h3>Smart Route Planner</h3>
-	  <p>Get optimized routes based on distance and traffic conditions.</p>
-	</div>
-	
-	<div className="feature-card clickable">
-	  <img src="/schedule.png" alt="Scheduler" />
-	  <h3>Bus Scheduler</h3>
-	  <p>Auto-generate bus schedules tailored to demand and timing.</p>
-	</div>
-
+          <FeaturesSection />
         </section>
 
         <section className="how-it-works">
@@ -107,50 +93,71 @@ export default function Home() {
           }
 
           .feature-card {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 1rem;
-  text-align: center;
-  width: 280px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-}
+            background: #fff;
+            padding: 2rem;
+            border-radius: 1rem;
+            text-align: center;
+            width: 280px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+          }
 
-.feature-card img {
-  width: 64px;
-  height: 64px;
-  margin-bottom: 1rem;
-}
+          .feature-card img {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 1rem;
+          }
 
-.feature-card h3 {
-  font-size: 1.25rem;
-  color: #311B92; /* Dark violet heading */
-  margin-bottom: 0.5rem;
-}
+          .feature-card h3 {
+            font-size: 1.25rem;
+            color: #311B92;
+            margin-bottom: 0.5rem;
+          }
 
-.feature-card p {
-  font-size: 0.95rem;
-  color: #444;
-}
+          .feature-card p {
+            font-size: 0.95rem;
+            color: #444;
+          }
 
-/* Make them clickable (but no nav) */
-.feature-card.clickable {
-  cursor: pointer;
-  background: linear-gradient(to top left, #f3e8ff, #fff);
-  border: 2px solid transparent;
-}
+          .feature-card.clickable {
+            cursor: pointer;
+            background: linear-gradient(to top left, #f3e8ff, #fff);
+            border: 2px solid transparent;
+          }
 
-.feature-card.clickable:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 30px rgba(93, 63, 211, 0.25);
-  border-color: #5D3FD3;
-}
+          .feature-card.clickable:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 30px rgba(93, 63, 211, 0.25);
+            border-color: #5D3FD3;
+          }
 
-/* Optional focus effect for keyboard users */
-.feature-card.clickable:focus-within {
-  outline: 2px solid #5D3FD3;
-}
+          .feature-card.clickable:focus-within {
+            outline: 2px solid #5D3FD3;
+          }
 
+          .bus-loader {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+          }
+
+          .bus-icon {
+            width: 80px;
+            animation: busDrive 2s linear infinite;
+          }
+
+          @keyframes busDrive {
+            0% {
+              transform: translateX(-100%);
+            }
+            100% {
+              transform: translateX(100vw);
+            }
+          }
 
           .how-it-works {
             background: #e9d5ff;
