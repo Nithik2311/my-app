@@ -31,7 +31,7 @@ export default function Home() {
           <p>Plan, schedule, and track buses efficiently with our automated system.</p>
           <div className="buttons">
             <a href="/findbus" className="btn">Find Bus</a>
-            <a href="/routes" className="btn btn-outline">Routes</a>
+            <a href="/assistant" className="btn btn-outline">Chat with Ai</a>
           </div>
         </div>
       </section>
