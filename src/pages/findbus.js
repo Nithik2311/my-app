@@ -17,7 +17,7 @@ const locations = [
 ];
 
 // Function to get coordinates from OpenStreetMap
-async function getCoordinates(place) {
+async function getCoordinates(place) { 
   try {
     const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(place)}, Chennai, Tamil Nadu, India&limit=1`);
     
