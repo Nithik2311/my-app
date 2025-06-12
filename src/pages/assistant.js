@@ -1,58 +1,67 @@
-import { useState } from 'react';
-import { GoogleGenerativeAI } from "@google/generative-ai";
+// src/pages/assistant.js
+
+import { useState, useRef, useEffect } from 'react';
 import Head from "next/head";
 import { useRouter } from "next/router";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+// No more direct GoogleGenerativeAI import here!
+// The API key is now handled purely on the server side.
 
 export default function AIAssistantPage() {
   const router = useRouter();
   const { source, destination } = router.query;
+  const messagesEndRef = useRef(null);
+
   const [messages, setMessages] = useState([
-    { 
-      text: `Hello! I'm your Chennai bus travel assistant. You're planning a trip from ${source || 'your starting point'} to ${destination || 'your destination'}. How can I help you today?`,
-      sender: 'ai' 
+    {
+      text: `Hello! I'm your Chennai bus travel assistant. You're planning a trip from **${source || 'your starting point'}** to **${destination || 'your destination'}**. How can I help you today?`,
+      sender: 'ai'
     }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   const handleSend = async () => {
     if (!input.trim()) return;
-    
+
     const userMessage = { text: input, sender: 'user' };
     setMessages(prev => [...prev, userMessage]);
     setInput('');
     setIsLoading(true);
-    
+
     try {
-      const prompt = `
-        You are a helpful bus travel assistant in Chennai. 
-        ${source ? `User is traveling from ${source} to ${destination}.` : ''}
-        They asked: "${input}"
-        
-        Provide a helpful response considering:
-        - Bus routes and numbers
-        - Approximate fares
-        - Travel time estimates
-        - Alternative options
-        - Accessibility information
-        - Current traffic conditions if relevant
-        - Safety tips
-        
-        Keep responses concise (1-3 sentences) and practical.
-        If the question isn't bus-related, politely explain you specialize in bus travel.
-      `;
-      
-      const result = await model.generateContent(prompt);
-      const response = await result.response;
-      const aiMessage = { text: response.text(), sender: 'ai' };
+      // Make a fetch request to your Next.js API route
+      const response = await fetch('/api/chat', { // <-- THIS IS THE KEY CHANGE
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          prompt: userMessage.text,
+          source: source,      // Pass source and destination to the API route
+          destination: destination,
+        }),
+      });
+
+      if (!response.ok) {
+        // Handle HTTP errors (e.g., 400, 500 from your API route)
+        const errorData = await response.json();
+        throw new Error(errorData.message || `API error: ${response.statusText}`);
+      }
+
+      const data = await response.json(); // Get the JSON response
+      const aiMessage = { text: data.text, sender: 'ai' }; // Extract the 'text' field
       setMessages(prev => [...prev, aiMessage]);
+
     } catch (error) {
-      setMessages(prev => [...prev, { 
-        text: "Sorry, I'm having trouble connecting right now. Please try again later.", 
-        sender: 'ai' 
+      console.error("Error communicating with API:", error);
+      setMessages(prev => [...prev, {
+        text: `Sorry, an error occurred: ${error.message}. Please try again later.`,
+        sender: 'ai'
       }]);
     } finally {
       setIsLoading(false);
@@ -64,6 +73,7 @@ export default function AIAssistantPage() {
       <Head>
         <title>Bus Travel Assistant | Automated Bus Scheduler</title>
         <meta name="description" content="AI-powered bus travel assistant for Chennai" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <div className="assistantContainer">
@@ -72,9 +82,10 @@ export default function AIAssistantPage() {
           {source && destination && (
             <p className="routeInfo">Helping with your trip from <strong>{source}</strong> to <strong>{destination}</strong></p>
           )}
-          <button 
+          <button
             className="backButton"
             onClick={() => router.back()}
+            aria-label="Back to Map"
           >
             ← Back to Map
           </button>
@@ -96,6 +107,7 @@ export default function AIAssistantPage() {
                 </div>
               </div>
             )}
+            <div ref={messagesEndRef} />
           </div>
 
           <div className="inputArea">
@@ -105,10 +117,12 @@ export default function AIAssistantPage() {
               placeholder="Ask about bus routes, fares, or travel tips..."
               onKeyPress={(e) => e.key === 'Enter' && handleSend()}
               disabled={isLoading}
+              aria-label="Type your message"
             />
-            <button 
-              onClick={handleSend} 
+            <button
+              onClick={handleSend}
               disabled={isLoading || !input.trim()}
+              aria-label="Send message"
             >
               {isLoading ? 'Sending...' : 'Send'}
             </button>
@@ -118,13 +132,13 @@ export default function AIAssistantPage() {
         <div className="suggestionBox">
           <p>Try asking:</p>
           <div className="suggestions">
-            <button onClick={() => setInput("What's the fastest bus route?")}>
+            <button onClick={() => setInput("What's the fastest bus route?")} disabled={isLoading}>
               What's the fastest bus route?
             </button>
-            <button onClick={() => setInput("How much will the fare cost?")}>
+            <button onClick={() => setInput("How much will the fare cost?")} disabled={isLoading}>
               How much will the fare cost?
             </button>
-            <button onClick={() => setInput("Are there any accessible buses?")}>
+            <button onClick={() => setInput("Are there any accessible buses?")} disabled={isLoading}>
               Are there any accessible buses?
             </button>
           </div>
@@ -132,12 +146,14 @@ export default function AIAssistantPage() {
       </div>
 
       <style jsx>{`
+        /* ... (Your existing CSS remains the same) ... */
         .assistantContainer {
           display: flex;
           flex-direction: column;
           height: 100vh;
           background: linear-gradient(to bottom, #f5f7fa, #e4e8f0);
           font-family: 'Poppins', sans-serif;
+          color: #333; /* Default text color */
         }
 
         .header {
@@ -191,7 +207,7 @@ export default function AIAssistantPage() {
           width: 100%;
           margin: 0 auto;
           padding: 1.5rem;
-          overflow: hidden;
+          overflow: hidden; /* Ensures flex child doesn't overflow */
         }
 
         .messages {
@@ -224,6 +240,7 @@ export default function AIAssistantPage() {
           border-radius: 18px;
           line-height: 1.5;
           animation: fadeIn 0.3s ease;
+          word-wrap: break-word; /* Prevents long words from overflowing */
         }
 
         @keyframes fadeIn {
@@ -249,6 +266,7 @@ export default function AIAssistantPage() {
         .typingIndicator {
           display: flex;
           gap: 5px;
+          align-items: center; /* Vertically align dots */
         }
 
         .typingIndicator span {
@@ -283,6 +301,7 @@ export default function AIAssistantPage() {
           padding: 1rem 0;
           border-top: 1px solid #e0e0e0;
           margin-top: auto;
+          align-items: center; /* Vertically align input and button */
         }
 
         .inputArea input {
@@ -350,6 +369,11 @@ export default function AIAssistantPage() {
 
         .suggestions button:hover {
           background: #d1c4e9;
+        }
+
+        .suggestions button:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
         }
 
         @media (max-width: 768px) {
