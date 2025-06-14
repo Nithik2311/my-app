@@ -1,7 +1,40 @@
 import Head from "next/head";
 import Link from "next/link";
+import { useState } from "react";
+import { auth, db } from "../lib/firebase-config";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 
 export default function Signup() {
+  const [form, setForm] = useState({ name: "", email: "", password: "", confirmPassword: "" });
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    if (form.password !== form.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, form.email, form.password);
+      const user = userCredential.user;
+
+      await setDoc(doc(db, "users", user.uid), {
+        name: form.name,
+        email: form.email,
+        uid: user.uid,
+      });
+
+      alert("Account created successfully!");
+    } catch (err) {
+      alert("Signup failed: " + err.message);
+    }
+  };
+
   return (
     <>
       <Head>
@@ -16,18 +49,18 @@ export default function Signup() {
             <p>Join the network. Get smarter commute insights.</p>
           </div>
 
-          <form className="signup-form">
+          <form className="signup-form" onSubmit={handleSignup}>
             <label>Full Name</label>
-            <input type="text" placeholder="Jane Doe" required />
+            <input type="text" name="name" placeholder="Jane Doe" onChange={handleChange} required />
 
             <label>Email Address</label>
-            <input type="email" placeholder="jane@example.com" required />
+            <input type="email" name="email" placeholder="jane@example.com" onChange={handleChange} required />
 
             <label>Password</label>
-            <input type="password" placeholder="••••••••" required />
+            <input type="password" name="password" placeholder="••••••••" onChange={handleChange} required />
 
             <label>Confirm Password</label>
-            <input type="password" placeholder="••••••••" required />
+            <input type="password" name="confirmPassword" placeholder="••••••••" onChange={handleChange} required />
 
             <button type="submit">Sign Up</button>
           </form>

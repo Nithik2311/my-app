@@ -1,7 +1,43 @@
 import Head from "next/head";
 import Link from "next/link";
+import { useState } from "react";
+import { auth } from "../lib/firebase-config";
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
+import { useRouter } from "next/router";
 
 export default function Login() {
+  const [form, setForm] = useState({ email: "", password: "" });
+  const router = useRouter();
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      await signInWithEmailAndPassword(auth, form.email, form.password);
+      alert("Login successful!");
+      router.push("/home");
+    } catch (err) {
+      alert("Login failed: " + err.message);
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    if (!form.email) {
+      alert("Please enter your email to reset password.");
+      return;
+    }
+
+    try {
+      await sendPasswordResetEmail(auth, form.email);
+      alert("Password reset email sent! Check your inbox.");
+    } catch (err) {
+      alert("Error sending reset email: " + err.message);
+    }
+  };
+
   return (
     <>
       <Head>
@@ -16,12 +52,16 @@ export default function Login() {
             <p>Track your route. Ride smarter.</p>
           </div>
 
-          <form className="login-form">
+          <form className="login-form" onSubmit={handleLogin}>
             <label>Email Address</label>
-            <input type="email" placeholder="you@example.com" required />
+            <input type="email" name="email" placeholder="you@example.com" onChange={handleChange} required />
 
             <label>Password</label>
-            <input type="password" placeholder="••••••••" required />
+            <input type="password" name="password" placeholder="••••••••" onChange={handleChange} required />
+
+            <p className="forgot-link">
+              <a href="#" onClick={handleForgotPassword}>Forgot Password?</a>
+            </p>
 
             <button type="submit">Login</button>
           </form>
@@ -33,18 +73,17 @@ export default function Login() {
 
         <style jsx>{`
           .login-page {
-  		display: flex;
-  		align-items: center;
-  		justify-content: center;
-  		height: 100vh;
-  		background: #f3e8ff; /* Light violet */
-  		font-family: 'Poppins', sans-serif;
-  		background-image: url('/bus-background-pattern.svg');
-  		background-repeat: no-repeat;
-  		background-position: right bottom;
-  		background-size: 400px;
-		}
-
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: #f3e8ff;
+            font-family: 'Poppins', sans-serif;
+            background-image: url('/bus-background-pattern.svg');
+            background-repeat: no-repeat;
+            background-position: right bottom;
+            background-size: 400px;
+          }
 
           .login-card {
             background: #ffffff;
@@ -86,7 +125,7 @@ export default function Login() {
           .login-form input {
             width: 100%;
             padding: 0.75rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             border-radius: 8px;
             border: 1px solid #cbd5e1;
             font-size: 1rem;
@@ -97,6 +136,21 @@ export default function Login() {
             outline: none;
             border-color: #facc15;
             box-shadow: 0 0 0 2px rgba(234, 179, 8, 0.3);
+          }
+
+          .forgot-link {
+            text-align: right;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+          }
+
+          .forgot-link a {
+            color: #9333ea;
+            text-decoration: none;
+          }
+
+          .forgot-link a:hover {
+            text-decoration: underline;
           }
 
           button {

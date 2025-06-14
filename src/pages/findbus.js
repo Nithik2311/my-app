@@ -8,7 +8,7 @@ const locations = [
   { name: "Chennai Central", image: "/central.png", info: "Central railway station" },
   { name: "Tambaram", image: "/tambaram.png", info: "Bus and train junction" },
   { name: "Guindy", image: "/guindy.png", info: "Industrial area" },
-  { name: "Anna Nagar", image: "/annanagar.png", info: "Residential area" },
+  { name: "Anna Nagar", image: "/annanagar.png", info: "Residential area" },  
   { name: "T Nagar", image: "/tnagar.png", info: "Shopping district" },
   { name: "Adyar", image: "/adyar.png", info: "Coastal neighborhood" },
   { name: "Marina Beach", image: "/marina.png", info: "Famous beach" },
