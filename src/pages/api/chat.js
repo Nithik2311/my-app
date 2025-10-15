@@ -8,7 +8,7 @@ console.log("GEMINI_API_KEY from env (API Route):", process.env.GEMINI_API_KEY ?
 // Initialize the Generative AI model
 // This only runs on the server, so GEMINI_API_KEY is used directly
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
 export default async function handler(req, res) {
   // Only allow POST requests for sending messages
