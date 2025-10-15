@@ -3,13 +3,13 @@ import { getFirestore } from 'firebase/firestore';
 
 // IMPORTANT: Replace with your actual Firebase config
 const firebaseConfig = {
-  apiKey: "AIzaSyB5IiXVcDFpbflTpamoHrx-VN5alCgS41g",
-  authDomain: "automatedbusschedule.firebaseapp.com",
-  projectId: "automatedbusschedule",
-  storageBucket: "automatedbusschedule.firebasestorage.app",
-  messagingSenderId: "479006348399",
-  appId: "1:479006348399:web:1fcdb08b8753ea2432299a",
-  measurementId: "G-RN1LMNRMXH"
+  apiKey: "AIzaSyAx_BXnKxO4G2UWBPk02wYEUXn2sKNsqZg",
+  authDomain: "automatedbus-1ec2c.firebaseapp.com",
+  projectId: "automatedbus-1ec2c",
+  storageBucket: "automatedbus-1ec2c.firebasestorage.app",
+  messagingSenderId: "940424838307",
+  appId: "1:940424838307:web:817f4c1913a88634dc1316",
+  measurementId: "G-JX6SRLG8KZ"
 };
 
 // Initialize Firebase
