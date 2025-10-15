@@ -4,12 +4,13 @@ import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCg4eA8uZxnDR_kBd_TNbW_2UOmMYioBJM",
-  authDomain: "automated-bus-scheduler.firebaseapp.com",
-  projectId: "automated-bus-scheduler",
-  storageBucket: "automated-bus-scheduler.appspot.com",
-  messagingSenderId: "200917580915",
-  appId: "1:200917580915:web:8b195513d3bdae4aeafe06"
+  apiKey: "AIzaSyAx_BXnKxO4G2UWBPk02wYEUXn2sKNsqZg",
+  authDomain: "automatedbus-1ec2c.firebaseapp.com",
+  projectId: "automatedbus-1ec2c",
+  storageBucket: "automatedbus-1ec2c.firebasestorage.app",
+  messagingSenderId: "940424838307",
+  appId: "1:940424838307:web:817f4c1913a88634dc1316",
+  measurementId: "G-JX6SRLG8KZ"
 };
 
 // Prevent duplicate initialization
