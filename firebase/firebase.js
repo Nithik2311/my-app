@@ -7,18 +7,21 @@ import { getAnalytics } from "firebase/analytics";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyD8pwS4cDnkqPSqw6iHUc7xBmNxguUTnuc",
-  authDomain: "automated-bus-scheduler-7bf9b.firebaseapp.com",
-  projectId: "automated-bus-scheduler-7bf9b",
-  storageBucket: "automated-bus-scheduler-7bf9b.firebasestorage.app",
-  messagingSenderId: "102212892639",
-  appId: "1:102212892639:web:d408283f0518ec4847f66a",
-  measurementId: "G-L2V0S6J12E"
+
+  apiKey: "AIzaSyB5IiXVcDFpbflTpamoHrx-VN5alCgS41g",
+  authDomain: "automatedbusschedule.firebaseapp.com",
+  projectId: "automatedbusschedule",
+  storageBucket: "automatedbusschedule.firebasestorage.app",
+  messagingSenderId: "479006348399",
+  appId: "1:479006348399:web:1fcdb08b8753ea2432299a",
+  measurementId: "G-RN1LMNRMXH"
 };
+
+
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getAnalytics(app);
+const db = getFirestore(app);
 
 // Test the connection immediately
 console.log('Firebase initialized:', app);
