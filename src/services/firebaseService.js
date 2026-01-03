@@ -1,4 +1,4 @@
-// firebaseService.js - Place this file in your src/services/ directory
+
 import { 
   collection, 
   doc, 
@@ -12,9 +12,8 @@ import {
   deleteDoc,
   Timestamp 
 } from 'firebase/firestore';
-import { db } from '../../firebase/firebase';
+import { db } from '@/lib/firebase-config';
 
-// Bus Service Functions
 export const busService = {
   // Get all buses
   getAllBuses: async () => {
@@ -30,7 +29,6 @@ export const busService = {
     }
   },
 
-  // Get active buses
   getActiveBuses: async () => {
     try {
       const q = query(
@@ -48,7 +46,6 @@ export const busService = {
     }
   },
 
-  // Add new bus
   addBus: async (busData) => {
     try {
       const docRef = await addDoc(collection(db, 'buses'), {
@@ -64,9 +61,7 @@ export const busService = {
   }
 };
 
-// Route Service Functions
 export const routeService = {
-  // Get all routes
   getAllRoutes: async () => {
     try {
       const querySnapshot = await getDocs(collection(db, 'routes'));
@@ -80,7 +75,6 @@ export const routeService = {
     }
   },
 
-  // Get routes by source and destination
   getRoutesByLocations: async (source, destination) => {
     try {
       const q = query(
@@ -100,7 +94,6 @@ export const routeService = {
     }
   },
 
-  // Add new route
   addRoute: async (routeData) => {
     try {
       const docRef = await addDoc(collection(db, 'routes'), {
@@ -115,7 +108,6 @@ export const routeService = {
   }
 };
 
-// Schedule Service Functions
 export const scheduleService = {
   // Get schedules by route and date
   getSchedulesByRoute: async (routeId, date) => {
@@ -138,19 +130,15 @@ export const scheduleService = {
     }
   },
 
-  // Get available buses for a route
   getAvailableBuses: async (source, destination, date) => {
     try {
-      // First get routes matching source and destination
       const routes = await routeService.getRoutesByLocations(source, destination);
       
       let allSchedules = [];
       
-      // Get schedules for each route
       for (const route of routes) {
         const schedules = await scheduleService.getSchedulesByRoute(route.id, date);
         
-        // Enhance schedules with route and bus information
         for (const schedule of schedules) {
           const busDoc = await getDoc(doc(db, 'buses', schedule.busId));
           if (busDoc.exists()) {
@@ -170,7 +158,6 @@ export const scheduleService = {
     }
   },
 
-  // Add new schedule
   addSchedule: async (scheduleData) => {
     try {
       const docRef = await addDoc(collection(db, 'schedules'), {
@@ -185,9 +172,7 @@ export const scheduleService = {
   }
 };
 
-// Location Service Functions
 export const locationService = {
-  // Get all locations
   getAllLocations: async () => {
     try {
       const q = query(
@@ -206,7 +191,6 @@ export const locationService = {
     }
   },
 
-  // Add new location
   addLocation: async (locationData) => {
     try {
       const docRef = await addDoc(collection(db, 'locations'), {
@@ -221,9 +205,7 @@ export const locationService = {
   }
 };
 
-// Booking Service Functions (for future use)
 export const bookingService = {
-  // Create new booking
   createBooking: async (bookingData) => {
     try {
       const docRef = await addDoc(collection(db, 'bookings'), {
@@ -237,7 +219,6 @@ export const bookingService = {
     }
   },
 
-  // Get user bookings
   getUserBookings: async (userId) => {
     try {
       const q = query(

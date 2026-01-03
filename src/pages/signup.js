@@ -29,9 +29,13 @@ export default function Signup() {
         uid: user.uid,
       });
 
-      alert("Account created successfully!");
+      alert("Signup successful! Your account has been created.");
     } catch (err) {
-      alert("Signup failed: " + err.message);
+      if (err.code === "auth/email-already-in-use") {
+        alert("This email already has an account. Please log in instead.");
+      } else {
+        alert("Signup failed: " + err.message);
+      }
     }
   };
 

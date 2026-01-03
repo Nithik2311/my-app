@@ -4,8 +4,6 @@ import { useState, useRef, useEffect } from 'react';
 import Head from "next/head";
 import { useRouter } from "next/router";
 
-// No more direct GoogleGenerativeAI import here!
-// The API key is now handled purely on the server side.
 
 export default function AIAssistantPage() {
   const router = useRouter();
@@ -34,27 +32,25 @@ export default function AIAssistantPage() {
     setIsLoading(true);
 
     try {
-      // Make a fetch request to your Next.js API route
-      const response = await fetch('/api/chat', { // <-- THIS IS THE KEY CHANGE
+      const response = await fetch('/api/chat', { 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           prompt: userMessage.text,
-          source: source,      // Pass source and destination to the API route
+          source: source,      
           destination: destination,
         }),
       });
 
       if (!response.ok) {
-        // Handle HTTP errors (e.g., 400, 500 from your API route)
         const errorData = await response.json();
         throw new Error(errorData.message || `API error: ${response.statusText}`);
       }
 
-      const data = await response.json(); // Get the JSON response
-      const aiMessage = { text: data.text, sender: 'ai' }; // Extract the 'text' field
+      const data = await response.json();
+      const aiMessage = { text: data.text, sender: 'ai' };
       setMessages(prev => [...prev, aiMessage]);
 
     } catch (error) {

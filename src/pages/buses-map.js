@@ -4,7 +4,6 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 import Routes from "../components/routes";
 
-// Dynamically load the component without SSR
 const BusMap = dynamic(() => import("../components/BusMap"), { 
   ssr: false,
   loading: () => <div style={{ 
@@ -25,7 +24,6 @@ export default function BusesMapPage() {
 
   const { sourceLat, sourceLon, destLat, destLon, source, destination } = router.query;
 
-  // Function to generate mock bus data for a route
   const generateBusDataForRoute = (routeIndex, distance) => {
     const busTypes = [
       { prefix: "CE", name: "City Express", capacity: [45, 50, 55] },
@@ -35,7 +33,7 @@ export default function BusesMapPage() {
       { prefix: "UB", name: "Urban Bus", capacity: [25, 30, 35] }
     ];
 
-    const numberOfBuses = Math.floor(Math.random() * 3) + 1; // 1-3 buses per route
+    const numberOfBuses = Math.floor(Math.random() * 3) + 1; 
     const buses = [];
 
     for (let i = 0; i < numberOfBuses; i++) {
@@ -43,13 +41,11 @@ export default function BusesMapPage() {
       const busNumber = Math.floor(Math.random() * 900) + 100;
       const capacity = busType.capacity[Math.floor(Math.random() * busType.capacity.length)];
       
-      // Generate realistic departure times
-      const baseHour = 7 + Math.floor(Math.random() * 12); // 7 AM to 7 PM
-      const minutes = Math.floor(Math.random() * 4) * 15; // 0, 15, 30, 45 minutes
+      const baseHour = 7 + Math.floor(Math.random() * 12);
+      const minutes = Math.floor(Math.random() * 4) * 15;
       const departureTime = `${baseHour.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
       
-      // Calculate arrival time based on distance (assuming 30-40 km/h average speed)
-      const travelMinutes = Math.floor((distance / 35) * 60); // 35 km/h average
+      const travelMinutes = Math.floor((distance / 35) * 60);
       const arrivalMinutes = (baseHour * 60 + minutes + travelMinutes);
       const arrivalHour = Math.floor(arrivalMinutes / 60);
       const arrivalMin = arrivalMinutes % 60;
@@ -62,25 +58,23 @@ export default function BusesMapPage() {
         arrival: arrivalTime,
         capacity: capacity,
         image: `/bus${(i % 3) + 1}.jpg`,
-        occupied: Math.floor(Math.random() * capacity * 0.7), // Random occupancy up to 70%
-        fare: Math.floor(distance * 2) + Math.floor(Math.random() * 10) + 15 // Base fare calculation
+        occupied: Math.floor(Math.random() * capacity * 0.7),
+        fare: Math.floor(distance * 2) + Math.floor(Math.random() * 10) + 15 
       });
     }
 
     return buses;
   };
 
-  // Function to handle routes received from BusMap
   const handleRoutesReceived = (mapRoutes) => {
     if (!mapRoutes || mapRoutes.length === 0) return;
 
     const dynamicRoutes = mapRoutes.map((route, index) => {
-      const distance = Math.round(route.summary.totalDistance / 1000 * 10) / 10; // Convert to km and round
-      const time = Math.round(route.summary.totalTime / 60); // Convert to minutes
+      const distance = Math.round(route.summary.totalDistance / 1000 * 10) / 10;
+      const time = Math.round(route.summary.totalTime / 60); 
       
       let routeName = `Route ${index + 1}`;
       
-      // Give more descriptive names based on route characteristics
       if (index === 0) {
         routeName = distance < 15 ? "Direct Route" : "Main Route";
       } else if (distance < mapRoutes[0].summary.totalDistance / 1000) {

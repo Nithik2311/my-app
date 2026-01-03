@@ -4,13 +4,13 @@ import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAx_BXnKxO4G2UWBPk02wYEUXn2sKNsqZg",
-  authDomain: "automatedbus-1ec2c.firebaseapp.com",
-  projectId: "automatedbus-1ec2c",
-  storageBucket: "automatedbus-1ec2c.firebasestorage.app",
-  messagingSenderId: "940424838307",
-  appId: "1:940424838307:web:817f4c1913a88634dc1316",
-  measurementId: "G-JX6SRLG8KZ"
+  apiKey: "AIzaSyDcw6XaJLdDvppp9MQP7YRm2YqwtV7wnrA",
+  authDomain: "sschedule-fad71.firebaseapp.com",
+  projectId: "sschedule-fad71",
+  storageBucket: "sschedule-fad71.firebasestorage.app",
+  messagingSenderId: "322850097332",
+  appId: "1:322850097332:web:1db6db7feecf173b5e2fe1",
+  measurementId: "G-B00YXV96HN"
 };
 
 // Prevent duplicate initialization
